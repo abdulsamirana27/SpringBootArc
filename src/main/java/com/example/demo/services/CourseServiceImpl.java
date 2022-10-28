@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -63,6 +64,27 @@ public class CourseServiceImpl implements CourseService {
 //			
 //		}
 		return c;
+	}
+
+	@Override
+	public Course updateCourse(Course course) {
+//		course
+		list.forEach(e->{
+			if(e.getId()==course.getId()) {
+				e.setDescription(course.getDescription());
+				e.setTitle(course.getTitle());
+			}
+		});
+		return null;
+	}
+
+	@Override
+	public List<Course> deleteCourse(long parseLong) {
+		
+		list= this.list.stream().filter(e->e.getId()!=parseLong).collect(Collectors.toList());
+//		list.removeIf(e ->e.getId()== parseLong);
+//		list.add(new Course(145,"added after removing","added by sam"));
+		return list;
 	}
 
 }

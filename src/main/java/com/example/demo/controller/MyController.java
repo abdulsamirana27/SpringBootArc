@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +22,7 @@ public class MyController {
 	
 	@GetMapping("/home")
 	public String home() {
+		
 		return "Welcome to my spring boot application";
 	}
 	
@@ -35,7 +37,12 @@ public class MyController {
 	}
 	
 	@PostMapping("/courses")
-	public Course addCourse(@RequestBody Course course) {
-	return this.courseService.addCourse(course);
+	public GenericResponse<Course> addCourse(@RequestBody Course course) {
+	return new GenericResponse<Course> ("00","Success",this.courseService.addCourse(course));
+	}
+	
+	@DeleteMapping("/courses/{courseId}")
+	public GenericResponse<List<Course>> deleteCourse(@PathVariable String courseId) {
+	return new GenericResponse<List<Course>> ("00","Success",this.courseService.deleteCourse(Long.parseLong(courseId)));
 	}
 }
